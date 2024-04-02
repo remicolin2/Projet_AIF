@@ -86,6 +86,7 @@ if __name__=='__main__':
     # Dans API ?
     features = test(net, dataloader)
     create_annoy_vec(features['features'])
+    features['path'].to_csv('path.csv', index=False)
     #parser = argparse.ArgumentParser()
     #parser.add_argument('movie', type=int, default = 10)
     #args = parser.parse_args()
