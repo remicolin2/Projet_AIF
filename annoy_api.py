@@ -6,6 +6,7 @@ from torchvision.transforms import ToPILImage
 from PIL import Image
 import numpy as np
 import logging
+from nlp_model import recommend
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 app = Flask(__name__)
 
@@ -35,6 +36,16 @@ def reco():
     closest_indices = annoy_db.get_nns_by_vector(vector[0].numpy(), 5) # Get the 2 closest elements indices  
     logging.info('La variable est : %s', closest_indices)
     return jsonify(closest_indices) # Return the reco as a JSON
+
+@app.route('/prompt_text', methods=['POST'])
+def prompt():
+    # data = request.json
+    # query = data.get('description')
+    # recommendations = recommend(query)
+    # return jsonify(recommendations)
+    query = request.form.get('prompt')
+    recommendations = recommend(query)
+    return jsonify(recommendations)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000) # Run the server on port 5000 and make it accessible externally

@@ -22,7 +22,7 @@ annoy_to_file = file_names.values.tolist()
 
 def process_image(image):
     
-    response = requests.post("http://annoy-db:5000/reco", json={"image" :image.tolist()})
+    response = requests.post("http://127.0.0.1:5000/reco", json={"image" :image.tolist()})
     logging.info('gradioapi')
     logging.info(os.getcwd())
     logging.info(os.listdir())
@@ -40,6 +40,14 @@ def process_image(image):
         axs[i].imshow(img) 
         axs[i].axis('off')
     return fig 
+
+def process_text(text):
+    response = requests.post("http://127.0.0.1:5000/prompt_text", data={"prompt": text})
+    return response.text
+
+# iface = gr.Interface(fn=process_text, inputs="text", outputs="text")
+# iface.launch()
+
 
 iface = gr.Interface(fn=process_image, inputs="image", outputs="plot")
 iface.launch(server_name="0.0.0.0")  
