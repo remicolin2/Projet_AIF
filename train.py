@@ -1,17 +1,13 @@
 import torch
-import torchvision
 import torchvision.transforms as transforms
 import torch.nn as nn
 from torch.utils.data import DataLoader
 import torch.nn.functional as F
 from torchvision import datasets
-import torch.optim as optim
 from tqdm import tqdm
 import pandas as pd
-from model import MobileNet
+from mobileNet_model import MobileNet
 from sklearn.metrics.pairwise import cosine_distances
-import matplotlib.image as mpimg
-import argparse
 import numpy as np
 from annoy import AnnoyIndex
 
@@ -56,17 +52,10 @@ def create_annoy_vec(features_list):
     for i, vecteur in enumerate(features_list):
         index.add_item(i, vecteur)
     index.build(n_trees)
-    index.save('annoy_db_1.ann')
-
-def recom(df, idx):
-    features = df['features']
-    features = np.vstack(features)
-    cosine_sim = cosine_distances(features, features)
-    recos = cosine_sim[idx].argsort()[1:6]
-    reco_posters = df.iloc[recos]['path'].tolist()
-    return reco_posters
+    index.save('annoy_db_img.ann')
 
 if __name__=='__main__':
+    # Create annoy index and Path for the images if not already done
     mean = [ 0.485, 0.456, 0.406 ]
     std = [ 0.229, 0.224, 0.225 ]
     normalize = transforms.Normalize(mean, std)
@@ -78,19 +67,13 @@ if __name__=='__main__':
                                     transforms.ToTensor(),
                                     normalize])
     dataset = ImageAndPathsDataset('MLP-20M', transform)
-
     dataloader = DataLoader(dataset, batch_size=128, num_workers=2, shuffle=False)
     net = MobileNet().to(device)
     train(net)
-
-    # Dans API ?
     features = test(net, dataloader)
+    # Annoy index
     create_annoy_vec(features['features'])
+    # path.csv
     features['path'].to_csv('path.csv', index=False)
-    #parser = argparse.ArgumentParser()
-    #parser.add_argument('movie', type=int, default = 10)
-    #args = parser.parse_args()
-    #movie = args.movie
-    #recoms_movies = recom(features, movie)
-    #print(f"The recommended movies are :{recoms_movies}")
+    
 

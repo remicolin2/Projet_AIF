@@ -1,6 +1,4 @@
 import requests
-import random
-import matplotlib.pyplot as plt
 from PIL import Image
 from annoy import AnnoyIndex
 import gradio as gr
@@ -8,46 +6,43 @@ import os
 import logging
 import pandas as pd
 from flask import Flask
+
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 app = Flask(__name__)
 
-
-# Charger les données depuis le fichier Annoy
-index = AnnoyIndex(576, 'angular')
-index.load('annoy_db_1.ann')
-base_path = "MLP-20M/MLP-20M"
-file_names = pd.read_csv('path.csv')
-#annoy_to_file = {i: file_name for i, file_name in enumerate(file_names.iterrows())}
-annoy_to_file = file_names.values.tolist()
-
 def process_image(image):
-    
-    response = requests.post("http://127.0.0.1:5000/reco", json={"image" :image.tolist()})
-    logging.info('gradioapi')
-    logging.info(os.getcwd())
-    logging.info(os.listdir())
-    logging.info(response.json())
-    #paths = [f"MLP-20M/MLP-20M/{i}.jpg" for i in response.json()["closest_indices"]]
-    base_path = "MLP-20M/MLP-20M"
-
+    file_names = pd.read_csv('path.csv')
+    annoy_to_file = file_names.values.tolist()
+    response = requests.post("http://192.168.55.103:5000/reco", json={"image" :image.tolist()})
     paths = [element for sous_liste in [annoy_to_file[idx] for idx in response.json()] for element in sous_liste]
-
-    logging.info('Le chemin : %s', paths)
-    #print(paths)
-    fig, axs = plt.subplots(1, len(paths), figsize=(5 * len(paths), 5))
-    for i, path in enumerate(paths):
+    logging.info('Le chemin : %s', paths)   
+    images = []
+    for path in paths:
         img = Image.open(path)
-        axs[i].imshow(img) 
-        axs[i].axis('off')
-    return fig 
+        images.append(img.convert("RGB"))  
+
+    # Convert the 5 images to a single image
+    total_width = sum(img.width for img in images)
+    max_height = max(img.height for img in images)
+    img_final = Image.new("RGB", (total_width, max_height))
+    x_offset = 0
+    for img in images:
+        img_final.paste(img, (x_offset, 0))
+        x_offset += img.width
+    return img_final
+
 
 def process_text(text):
-    response = requests.post("http://127.0.0.1:5000/prompt_text", data={"prompt": text})
-    return response.text
+    response = requests.post("http://192.168.55.103:5000/prompt_text", json={"description": text})
+    data = response.json()
+    titles = data[0]
+    descriptions = data[1]
+    # Output in the form {title : resume of the film}
+    output = "\n\n".join([f"{title} : {description}" for title, description in zip(titles, descriptions)])
+    return output
 
-# iface = gr.Interface(fn=process_text, inputs="text", outputs="text")
-# iface.launch()
 
-
-iface = gr.Interface(fn=process_image, inputs="image", outputs="plot")
-iface.launch(server_name="0.0.0.0")  
+with gr.Blocks() as blocks:
+        gr.Interface(fn=process_image, inputs="image", outputs="image", title="Film recommendation by poster similarity")
+        gr.Interface(fn=process_text, inputs="text", outputs="text", title="Film recommendation by description similarity")
+blocks.launch()
