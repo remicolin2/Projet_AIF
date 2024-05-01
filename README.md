@@ -16,7 +16,7 @@ This gradio demo app has 2 functionnality : uploading a film poster and it recom
 
 ## Authors
 
-- [Author Name 1](https://github.com/mickaelsong)
-- [Author Name 2](https://github.com/KARIIII123)
-- [Author Name 3](https://github.com/remicolin2)
-- [Author Name 4](https://github.com/cassmussard)
+- [Mickael Song](https://github.com/mickaelsong)
+- [Karima Ghamnia](https://github.com/KARIIII123)
+- [Remi Colin](https://github.com/remicolin2)
+- [Cassandra Mussard](https://github.com/cassmussard)
