@@ -1,6 +1,6 @@
 version: '3.8' # specify docker-compose version
 services: # services to run
-  annoy-db: # name of the first service
+  api-app: # name of the first service
     build: 
       context: . # specify the directory of the Dockerfile
       dockerfile: Dockerfile-api # specify the Dockerfile name
@@ -14,6 +14,6 @@ services: # services to run
     ports:
       - "7860:7860" # specify port mapping
     depends_on:
-      - annoy-db # specify service dependencies
+      - api-app # specify service dependencies
 
   

@@ -1,14 +1,10 @@
 import requests
 from PIL import Image
-from annoy import AnnoyIndex
 import gradio as gr
-import os
 import logging
 import pandas as pd
-from flask import Flask
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-app = Flask(__name__)
 
 def process_image(image):
     file_names = pd.read_csv('path.csv')
@@ -41,8 +37,9 @@ def process_text(text):
     output = "\n\n".join([f"{title} : {description}" for title, description in zip(titles, descriptions)])
     return output
 
+if __name__=='__main__':
 
-with gr.Blocks() as blocks:
-        gr.Interface(fn=process_image, inputs="image", outputs="image", title="Film recommendation by poster similarity")
-        gr.Interface(fn=process_text, inputs="text", outputs="text", title="Film recommendation by description similarity")
-blocks.launch()
+    with gr.Blocks() as blocks:
+            gr.Interface(fn=process_image, inputs="image", outputs="image", title="Film recommendation by poster similarity")
+            gr.Interface(fn=process_text, inputs="text", outputs="text", title="Film recommendation by description similarity")
+    blocks.launch(server_name = "0.0.0.0", server_port = 7860)
