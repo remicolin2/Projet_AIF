@@ -6,11 +6,17 @@ This gradio demo app has 2 functionnality : uploading a film poster and it recom
 ## How to run
 1. Install Docker and Docker compose
 2. Clone this repository
-3. Run `docker compose up` in the root directory of this repository
+3. Run `sudo docker compose up` in the root directory of this repository
 4. Open `localhost:7860` in your browser
 5. Upload an image and see the results
 6. To stop the server, run 
-```docker-compose down``` in the root directory of this repository
-7. To remove the containers, run `docker-compose rm` in the root directory of this repository
-8. To remove the images, run `docker image prune -a` in the root directory of this repository
+```sudo docker-compose down``` in the root directory of this repository
+7. To remove the containers, run `sudo docker-compose rm` in the root directory of this repository
+8. To remove the images, run `sudo docker image prune -a` in the root directory of this repository
 
+## Authors
+
+- [Author Name 1](https://github.com/mickaelsong)
+- [Author Name 2](https://github.com/KARIIII123)
+- [Author Name 3](https://github.com/remicolin2)
+- [Author Name 4](https://github.com/cassmussard)
