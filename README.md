@@ -6,7 +6,7 @@ This gradio demo app has 2 functionnality : uploading a film poster and it recom
 ## How to run
 1. Install Docker and Docker compose
 2. Clone this repository
-3. Run `sudo docker compose up` in the root directory of this repository
+3. Run `sudo docker-compose up` in the root directory of this repository
 4. Open `localhost:7860` in your browser
 5. Upload an image and see the results
 6. To stop the server, run 
