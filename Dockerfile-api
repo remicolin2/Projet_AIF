@@ -4,8 +4,28 @@ FROM python:3.8
 WORKDIR /app
 # Copy the current directory contents into the container at /app
 COPY . /app
+
+# Download the dataset from google drive
+RUN pip install gdown
+# Télécharger le dataset depuis Google Drive
+RUN gdown --id '1BdCAAaWpiLlqZUr6lRPIQ3BJLiFJx_nW' --output MLP-20M.zip
+
+# Vérifier la taille du fichier ZIP
+RUN ls -lh MLP-20M.zip
+
+# Tenter de dézipper le fichier, imprimer les erreurs s'il y en a
+RUN apt-get update && apt-get install -y unzip
+RUN unzip MLP-20M.zip || echo "Erreur lors de la décompression"
+
 # Install any needed packages specified in requirements.txt
 RUN pip install --trusted-host pypi.python.org -r requirements_api.txt
+###
+#RUN pip install gdown dans le dockerfile
+#RUN gdown --id '1BdCAAaWpiLlqZUr6lRPIQ3BJLiFJx_nW' --output MLP-20M.zip
+##Unzip the dataset
+#RUN apt-get update && apt-get install -y unzip
+#RUN unzip MLP-20M.zip && rm MLP-20M.zip
+###
 # Make port 5000 available to the world outside this container
 EXPOSE 5000
 # Define environment variable for Flask to run in production mode

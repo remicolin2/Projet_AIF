@@ -7,18 +7,11 @@ from torchvision import datasets
 from tqdm import tqdm
 import pandas as pd
 from mobileNet_model import MobileNet
-from sklearn.metrics.pairwise import cosine_distances
 import numpy as np
 from annoy import AnnoyIndex
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-# import subprocess
-# download_command = "kaggle datasets download ghrzarea/movielens-20m-posters-for-machine-learning"
-# subprocess.run(download_command.split(), check=True)
-
-# unzip_command = "unzip movielens-20m-posters-for-machine-learning.zip"
-# subprocess.run(unzip_command.split(), check=True)
 
 class ImageAndPathsDataset(datasets.ImageFolder):
     def __getitem__(self, index):
