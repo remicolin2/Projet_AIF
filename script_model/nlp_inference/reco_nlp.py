@@ -1,6 +1,6 @@
 import pandas as pd
 from annoy import AnnoyIndex
-from nlp_model import SentenceTransformerModel
+from script_model.nlp_inference.nlp_model import SentenceTransformerModel
 
 def preprocess(data_csv = 'movies_metadata.csv') : 
     model = SentenceTransformerModel()

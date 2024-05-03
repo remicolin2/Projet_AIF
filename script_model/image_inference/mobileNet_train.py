@@ -4,7 +4,7 @@ from torch.utils.data import DataLoader
 from torchvision import datasets
 from tqdm import tqdm
 import pandas as pd
-from mobileNet_model import MobileNet
+from script_model.image_inference.mobileNet_model import MobileNet
 from annoy import AnnoyIndex
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')

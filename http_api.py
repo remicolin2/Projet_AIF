@@ -1,11 +1,11 @@
 from flask import Flask, request, jsonify
 from annoy import AnnoyIndex
-from mobileNet_model import MobileNet, process
+from script_model.image_inference.mobileNet_model import MobileNet, process
 import torch
 from PIL import Image
 import numpy as np
 import logging
-from reco_nlp import preprocess, recommend
+from script_model.nlp_inference.reco_nlp import preprocess, recommend
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 app = Flask(__name__)
