@@ -1,13 +1,10 @@
 import torch
 import torchvision.transforms as transforms
-import torch.nn as nn
 from torch.utils.data import DataLoader
-import torch.nn.functional as F
 from torchvision import datasets
 from tqdm import tqdm
 import pandas as pd
 from mobileNet_model import MobileNet
-import numpy as np
 from annoy import AnnoyIndex
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
