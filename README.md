@@ -1,5 +1,7 @@
 # Projet AIF
 
+## 1. Système de recommandation
+
 This gradio demo app has 2 functionnality : uploading a film poster and it recommands 5 similar posters or writing a description of a film and it recommands 5 similar film with their synopsis.     
 ![Alt Text](./image_readme/readme.png)
 
@@ -13,6 +15,11 @@ This gradio demo app has 2 functionnality : uploading a film poster and it recom
 ```sudo docker-compose down``` in the root directory of this repository
 7. To remove the containers, run `sudo docker-compose rm` in the root directory of this repository
 8. To remove the images, run `sudo docker image prune -a` in the root directory of this repository
+
+## 2. Méthode d'explicabilité (RISE)
+
+Le notebook XAI_notebook implémente la méthode RISE avec deux réseaux de neurones fine tuné sur le dataset Imagenette. 
+Il regroupe aussi deux métriques et la comparaison avec une autre méthode d'explicabilité. 
 
 ## Authors
 
