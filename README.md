@@ -18,7 +18,7 @@ This gradio demo app has 2 functionnality : uploading a film poster and it recom
 
 ## 2. Méthode d'explicabilité (RISE)
 
-Le notebook XAI_notebook implémente la méthode RISE avec deux réseaux de neurones fine tuné sur le dataset Imagenette. 
+Le notebook XAIF_notebook implémente la méthode RISE avec deux réseaux de neurones fine tuné sur le dataset Imagenette. 
 Il regroupe aussi deux métriques et la comparaison avec une autre méthode d'explicabilité. 
 
 ## Authors
